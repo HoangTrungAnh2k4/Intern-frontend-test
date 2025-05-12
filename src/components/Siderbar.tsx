@@ -9,7 +9,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const isActive = (path: string) => {
-    return pathname === path ? "bg-blueBg text-blueText" : "";
+    return pathname.startsWith(path) ? "bg-blueBg text-blueText" : "";
   };
 
   return (
@@ -75,6 +75,10 @@ export default function Sidebar() {
           <span className="text-sm">Users</span>
         </Link>
       </ul>
+
+      <div className="top-3 right-3 fixed bg-[#f7f7f7] shadow px-4 py-2 rounded-lg animate-bounce">
+        Hoàng Trung Anh
+      </div>
     </div>
   );
 }
