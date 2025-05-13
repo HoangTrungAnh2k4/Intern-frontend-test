@@ -19,7 +19,7 @@ interface User {
   name: string;
 }
 
-export default function Albums() {
+function Albums() {
   const [listUserId, setListUserId] = useState<number[]>([]);
 
   const searchParams = useSearchParams();
@@ -138,21 +138,27 @@ export default function Albums() {
     );
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Table
-        dataSource={albums}
-        columns={columns}
-        rowKey="id"
-        pagination={{
-          pageSize: pageSize,
-          total: 100,
-          showSizeChanger: true,
-          pageSizeOptions: ["10", "20", "50", "100"],
-          showLessItems: false,
-          current: currentPage,
-        }}
-        onChange={handleChangePagination}
-      />
+    <Table
+      dataSource={albums}
+      columns={columns}
+      rowKey="id"
+      pagination={{
+        pageSize: pageSize,
+        total: 100,
+        showSizeChanger: true,
+        pageSizeOptions: ["10", "20", "50", "100"],
+        showLessItems: false,
+        current: currentPage,
+      }}
+      onChange={handleChangePagination}
+    />
+  );
+}
+
+export default function AlbumsPage() {
+  return (
+    <Suspense fallback={<div>Loading albums...</div>}>
+      <Albums />
     </Suspense>
   );
 }
