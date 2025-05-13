@@ -29,7 +29,7 @@ export default function UserDetail() {
     data: user,
     error: userError,
     isLoading: userLoading,
-  } = useSWR(userDetailAPI(id as string), fetcher);
+  } = useSWR(userDetailAPI(Number(id)), fetcher);
 
   const columns = [
     {
