@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/albums");
+    router.push("/albums?pageSize=20&current=1");
   }, [router]);
 
   return <div></div>;

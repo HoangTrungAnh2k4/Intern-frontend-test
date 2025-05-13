@@ -10,9 +10,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import useSWR from "swr";
+import { useRouter } from "next/navigation";
 
 export default function UserDetail() {
   const { id } = useParams();
+  const router = useRouter();
 
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -63,7 +65,7 @@ export default function UserDetail() {
     return `${first}+${last}`;
   };
 
-  if (albumError || userError) return <div>Failed to load</div>;
+  if (albumError || userError) return <div>Failed to load, retry again!</div>;
 
   return (
     <div className="">
@@ -80,20 +82,25 @@ export default function UserDetail() {
       </div>
 
       <div className="flex items-center gap-4 mb-4">
-        <Link href={"/users"}>
+        <button
+          onClick={() => {
+            router.back();
+          }}
+        >
           <ArrowLeftOutlined className="hover:bg-[#0000000f] p-2 rounded-lg cursor-pointer" />
-        </Link>
+        </button>
         <span className="font-medium text-black text-xl">Show User</span>
       </div>
 
       <div className="bg-white p-6 border-[#d5d5d5e0] border-[1px] rounded-lg">
         <div className="p-6 border-[#d5d5d5e0] border-[1px] rounded-lg">
           {userLoading ? (
-            <div className="flex justify-center items-center space-x-2 bg-white dark:invert h-10">
+            <div role="status" className="max-w-sm animate-pulse">
+              <div className="bg-gray-200 dark:bg-gray-700 mb-4 rounded-full w-48 h-2.5"></div>
+              <div className="bg-gray-200 dark:bg-gray-700 mb-2.5 rounded-full max-w-[360px] h-2"></div>
+              <div className="bg-gray-200 dark:bg-gray-700 mb-2.5 rounded-full max-w-[300px] h-2"></div>
+              <div className="bg-gray-200 dark:bg-gray-700 rounded-full max-w-[360px] h-2"></div>
               <span className="sr-only">Loading...</span>
-              <div className="bg-gray-600 rounded-full w-3 h-3 animate-bounce [animation-delay:-0.3s]"></div>
-              <div className="bg-gray-600 rounded-full w-3 h-3 animate-bounce [animation-delay:-0.15s]"></div>
-              <div className="bg-gray-600 rounded-full w-3 h-3 animate-bounce"></div>
             </div>
           ) : (
             <div className="flex gap-6 pb-6 border-[#d5d5d5e0] border-b-[1px]">

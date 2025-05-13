@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface Album {
   userId: number;
@@ -20,8 +21,13 @@ interface User {
 
 export default function Albums() {
   const [listUserId, setListUserId] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const pageSize = Number(searchParams.get("pageSize")) || 20;
+  const currentPage = Number(searchParams.get("current")) || 1;
 
   const pageStart = (currentPage - 1) * pageSize;
   const pageEnd = currentPage * pageSize;
@@ -105,8 +111,15 @@ export default function Albums() {
   ];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (pagination: any) => {
-    setCurrentPage(pagination.current);
+  const handleChangePagination = (pagination: any) => {
+    const newPage = pagination.current;
+    const newPageSize = pagination.pageSize;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("current", newPage);
+    params.set("pageSize", newPageSize);
+
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   useEffect(() => {
@@ -137,13 +150,8 @@ export default function Albums() {
           pageSizeOptions: ["10", "20", "50", "100"],
           showLessItems: false,
           current: currentPage,
-          onShowSizeChange(_, size) {
-            setCurrentPage(1);
-            setPageSize(size);
-            window.scrollTo(0, 0);
-          },
         }}
-        onChange={handleChange}
+        onChange={handleChangePagination}
       />
     </div>
   );

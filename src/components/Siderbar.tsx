@@ -14,7 +14,10 @@ export default function Sidebar() {
 
   return (
     <div className="w-[200px] min-w-[200px] max-w-[200px] sidebar">
-      <a href={"/albums"} className="flex items-center px-4 w-full h-[64px]">
+      <a
+        href={"/albums?pageSize=20&current=1"}
+        className="flex items-center px-4 w-full h-[64px]"
+      >
         <Image
           src="https://geekup.vn/Icons/geekup-logo-general.svg"
           alt="Geekup Logo"
