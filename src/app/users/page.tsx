@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import useSWR from "swr";
 
+import { listUserAPI, avatarImageAPI } from "@/apis";
+
 interface User {
   id: number;
   name: string;
@@ -18,10 +20,7 @@ interface User {
 
 export default function Users() {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error, isLoading } = useSWR(
-    `https://jsonplaceholder.typicode.com/users?_end=10&_start=0`,
-    fetcher
-  );
+  const { data, error, isLoading } = useSWR(listUserAPI([]), fetcher);
 
   const columns = [
     {
@@ -34,12 +33,9 @@ export default function Users() {
       dataIndex: "name",
       key: "avatar",
       render: (text: string) => {
-        const [first = "", last = ""] = text.toLowerCase().split(" "); // tách tên
-        const avatarName = `${first}+${last}`; // nối bằng dấu cộng cho URL
-
         return (
           <Image
-            src={`https://ui-avatars.com/api/?background=random&rounded=true&name=${avatarName}`}
+            src={avatarImageAPI(text)}
             alt={text}
             width={32}
             height={32}

@@ -8,9 +8,10 @@ import {
 import { Table } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useSWR from "swr";
-import { useRouter } from "next/navigation";
+
+import { albumsOfUserAPI, userDetailAPI, avatarImageAPI } from "@/apis";
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -22,16 +23,13 @@ export default function UserDetail() {
     data: albums,
     error: albumError,
     isLoading: albumLoading,
-  } = useSWR(
-    `https://jsonplaceholder.typicode.com/albums?_end=10&_start=0&userId=${id}`,
-    fetcher
-  );
+  } = useSWR(albumsOfUserAPI(id as string), fetcher);
 
   const {
     data: user,
     error: userError,
     isLoading: userLoading,
-  } = useSWR(`https://jsonplaceholder.typicode.com/users/${id}`, fetcher);
+  } = useSWR(userDetailAPI(id as string), fetcher);
 
   const columns = [
     {
@@ -59,11 +57,6 @@ export default function UserDetail() {
       ),
     },
   ];
-
-  const formatAvatarName = (name: string) => {
-    const [first = "", last = ""] = name.toLowerCase().split(" ");
-    return `${first}+${last}`;
-  };
 
   if (albumError || userError) return <div>Failed to load, retry again!</div>;
 
@@ -105,9 +98,7 @@ export default function UserDetail() {
           ) : (
             <div className="flex gap-6 pb-6 border-[#d5d5d5e0] border-b-[1px]">
               <Image
-                src={`https://ui-avatars.com/api/?background=random&rounded=true&name=${formatAvatarName(
-                  user?.name
-                )}`}
+                src={avatarImageAPI(user?.name)}
                 alt={user?.name}
                 width={32}
                 height={32}

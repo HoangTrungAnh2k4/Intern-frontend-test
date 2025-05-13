@@ -21,8 +21,10 @@ export default function Sidebar() {
         <Image
           src="https://geekup.vn/Icons/geekup-logo-general.svg"
           alt="Geekup Logo"
-          width={100}
-          height={100}
+          width={32}
+          height={32}
+          priority
+          className="w-[100px] h-[27px]"
         />
       </a>
 

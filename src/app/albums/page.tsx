@@ -8,6 +8,8 @@ import { Suspense, useEffect, useState } from "react";
 import useSWR from "swr";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
+import { listUserAPI, listAlbumAPI, avatarImageAPI } from "@/apis";
+
 interface Album {
   userId: number;
   id: number;
@@ -38,18 +40,12 @@ function Albums() {
     data: albums,
     error: albumsError,
     isLoading: albumsLoading,
-  } = useSWR<Album[]>(
-    `https://jsonplaceholder.typicode.com/albums?_end=${pageEnd}&_start=${pageStart}`,
+  } = useSWR<Album[]>(listAlbumAPI(pageEnd, pageStart), fetcher);
+
+  const { data: users } = useSWR(
+    listUserId.length > 0 ? listUserAPI(listUserId) : null,
     fetcher
   );
-
-  const usersQuery = listUserId.length
-    ? `https://jsonplaceholder.typicode.com/users?_end=10&_start=0&${listUserId
-        .map((id) => `id=${id}`)
-        .join("&")}`
-    : null;
-
-  const { data: users } = useSWR(usersQuery, fetcher);
 
   const columns = [
     {
@@ -75,16 +71,13 @@ function Albums() {
           );
         }
 
-        const [first = "", last = ""] = user?.name.toLowerCase().split(" ");
-        const avatarName = `${first}+${last}`;
-
         return (
           <Link
             href={`/users/${record.userId}`}
             className="flex items-center px-[7px] rounded-sm w-fit cursor-pointer"
           >
             <Image
-              src={`https://ui-avatars.com/api/?background=random&rounded=true&name=${avatarName}`}
+              src={avatarImageAPI(user?.name)}
               alt={user?.name}
               width={32}
               height={32}

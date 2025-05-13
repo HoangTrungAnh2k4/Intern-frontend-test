@@ -8,6 +8,13 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
+import {
+  avatarImageAPI,
+  albumDetailAPI,
+  photosOfAlbumAPI,
+  userDetailAPI,
+} from "@/apis";
+
 export default function AlbumDetail() {
   const { id } = useParams();
   const router = useRouter();
@@ -19,25 +26,14 @@ export default function AlbumDetail() {
     data: albumDetail,
     error: albumError,
     isLoading: albumLoading,
-  } = useSWR(`https://jsonplaceholder.typicode.com/albums/${id}`, fetcher);
+  } = useSWR(albumDetailAPI(id as string), fetcher);
 
-  const { data: photos } = useSWR(
-    `https://jsonplaceholder.typicode.com/photos?_end=10&_start=0&albumId=${id}`,
+  const { data: photos } = useSWR(photosOfAlbumAPI(id as string), fetcher);
+
+  const { data: user, error: userError } = useSWR(
+    userId ? userDetailAPI(userId) : null,
     fetcher
   );
-
-  const usersQuery = userId
-    ? `https://jsonplaceholder.typicode.com/users/${userId}`
-    : null;
-
-  const { data: user, error: userError } = useSWR(usersQuery, fetcher);
-
-  const formatAvatarName = (name: string) => {
-    if (!name) return "";
-
-    const [first = "", last = ""] = name.toLowerCase().split(" ");
-    return `${first}+${last}`;
-  };
 
   useEffect(() => {
     if (albumDetail) {
@@ -81,9 +77,7 @@ export default function AlbumDetail() {
           ) : (
             <div className="flex gap-6 pb-6 border-[#d5d5d5e0] border-b-[1px]">
               <Image
-                src={`https://ui-avatars.com/api/?background=random&rounded=true&name=${formatAvatarName(
-                  user?.name
-                )}`}
+                src={avatarImageAPI(user?.name)}
                 alt="username"
                 width={32}
                 height={32}
