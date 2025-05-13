@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ArrowLeftOutlined,
-  EyeOutlined,
-  UnorderedListOutlined,
-} from "@ant-design/icons";
+import { ArrowLeftOutlined, UnorderedListOutlined } from "@ant-design/icons";
 
 import { Image } from "antd";
 import Link from "next/link";
@@ -24,11 +20,7 @@ export default function AlbumDetail() {
     isLoading: albumLoading,
   } = useSWR(`https://jsonplaceholder.typicode.com/albums/${id}`, fetcher);
 
-  const {
-    data: photos,
-    error: photoError,
-    isLoading: photoLoading,
-  } = useSWR(
+  const { data: photos } = useSWR(
     `https://jsonplaceholder.typicode.com/photos?_end=10&_start=0&albumId=${id}`,
     fetcher
   );
@@ -37,11 +29,7 @@ export default function AlbumDetail() {
     ? `https://jsonplaceholder.typicode.com/users/${userId}`
     : null;
 
-  const {
-    data: user,
-    error: userError,
-    isLoading: userLoading,
-  } = useSWR(usersQuery, fetcher);
+  const { data: user, error: userError } = useSWR(usersQuery, fetcher);
 
   const formatAvatarName = (name: string) => {
     if (!name) return "";
@@ -127,9 +115,7 @@ export default function AlbumDetail() {
                     return (
                       <Image
                         key={index}
-                        src={`https://picsum.photos/1200/60${
-                          index % 2 ? 1 : 0
-                        }`}
+                        src={`/image${index % 2 === 0 ? 1 : 2}.jpg`}
                         alt={photo?.title}
                         width={200}
                         height={200}

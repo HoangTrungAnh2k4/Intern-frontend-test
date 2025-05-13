@@ -45,10 +45,11 @@ export default function UserDetail() {
     {
       title: "Actions",
       key: "actions",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render: (_: null, record: any) => (
         <Link
           href={`/albums/${record.id}`}
-          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueText rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
+          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueBg rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
         >
           <EyeOutlined />
           <span className="ml-2 text-sm">Show</span>
@@ -90,9 +91,9 @@ export default function UserDetail() {
           {userLoading ? (
             <div className="flex justify-center items-center space-x-2 bg-white dark:invert h-10">
               <span className="sr-only">Loading...</span>
-              <div className="bg-black rounded-full w-4 h-4 animate-bounce [animation-delay:-0.3s]"></div>
-              <div className="bg-black rounded-full w-4 h-4 animate-bounce [animation-delay:-0.15s]"></div>
-              <div className="bg-black rounded-full w-4 h-4 animate-bounce"></div>
+              <div className="bg-gray-600 rounded-full w-3 h-3 animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="bg-gray-600 rounded-full w-3 h-3 animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="bg-gray-600 rounded-full w-3 h-3 animate-bounce"></div>
             </div>
           ) : (
             <div className="flex gap-6 pb-6 border-[#d5d5d5e0] border-b-[1px]">
@@ -124,7 +125,7 @@ export default function UserDetail() {
                 <div className="border-4 border-primary border-t-transparent rounded-full w-16 h-16 animate-spin" />
               </div>
             ) : (
-              <Table dataSource={albums} columns={columns} />
+              <Table dataSource={albums} columns={columns} rowKey={"id"} />
             )}
           </div>
         </div>

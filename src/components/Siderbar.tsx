@@ -14,21 +14,21 @@ export default function Sidebar() {
 
   return (
     <div className="w-[200px] min-w-[200px] max-w-[200px] sidebar">
-      <div className="flex items-center px-4 w-full h-[64px]">
+      <a href={"/albums"} className="flex items-center px-4 w-full h-[64px]">
         <Image
           src="https://geekup.vn/Icons/geekup-logo-general.svg"
           alt="Geekup Logo"
           width={100}
           height={100}
         />
-      </div>
+      </a>
 
       <ul className="flex flex-col gap-1 mx-1 pt-2">
         <Link
           href={"/albums"}
           className={`${isActive(
             "/albums"
-          )}  inline-flex items-center gap-3 rounded-md hover:rounded-md hover:bg-[#f0f0f0] pl-6 h-[40px]`}
+          )}  inline-flex items-center  gap-3 rounded-md hover:rounded-md hover:bg-[#f0f0f0] pl-6 h-[40px]`}
         >
           <span
             role="img"

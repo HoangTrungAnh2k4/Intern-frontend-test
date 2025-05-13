@@ -81,7 +81,7 @@ export default function Users() {
       render: (_: null, record: User) => (
         <Link
           href={`/users/${record.id}`}
-          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueText rounded-sm w-fit hover:text-blueText cursor-pointer"
+          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueBg rounded-sm w-fit hover:text-blueText cursor-pointer"
         >
           <EyeOutlined />
           <span className="ml-2 text-sm">Show</span>
@@ -101,7 +101,7 @@ export default function Users() {
   return (
     <div className="">
       <h4 className="mb-3 text-xl">Users</h4>
-      <Table dataSource={data} columns={columns} />
+      <Table dataSource={data} columns={columns} rowKey={"id"} />
     </div>
   );
 }

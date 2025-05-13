@@ -95,7 +95,7 @@ export default function Albums() {
       render: (_: null, record: Album) => (
         <Link
           href={`/albums/${record.id}`}
-          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueText rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
+          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueBg rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
         >
           <EyeOutlined />
           <span className="ml-2 text-sm">Show</span>
@@ -138,9 +138,9 @@ export default function Albums() {
           showLessItems: false,
           current: currentPage,
           onShowSizeChange(_, size) {
-            window.scrollTo(0, 0);
-            setPageSize(size);
             setCurrentPage(1);
+            setPageSize(size);
+            window.scrollTo(0, 0);
           },
         }}
         onChange={handleChange}
