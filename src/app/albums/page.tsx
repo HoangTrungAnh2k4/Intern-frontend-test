@@ -4,7 +4,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import { Table } from "antd";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import useSWR from "swr";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -138,7 +138,7 @@ export default function Albums() {
     );
 
   return (
-    <div className="">
+    <Suspense fallback={<div>Loading...</div>}>
       <Table
         dataSource={albums}
         columns={columns}
@@ -153,6 +153,6 @@ export default function Albums() {
         }}
         onChange={handleChangePagination}
       />
-    </div>
+    </Suspense>
   );
 }
