@@ -1,13 +1,12 @@
-# Project Title
+# PRODUCT FRONTEND TECHNICAL ASSESSMENT
 
-A brief description of what this project does and who it's for.
+A exam for  intern frontend developer
 
 ## Installation
 
-Provide step-by-step instructions on how to set up your project.
+how to set up and run  project.
 
 ```bash
-# Example
 git clone https://github.com/HoangTrungAnh2k4/Intern-frontend-test.git
 cd that repo
 npm install
