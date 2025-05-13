@@ -81,7 +81,7 @@ export default function Users() {
       render: (_: null, record: User) => (
         <Link
           href={`/users/${record.id}`}
-          className="flex items-center px-[7px] border rounded-sm w-fit hover:text-blueText cursor-pointer"
+          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueText rounded-sm w-fit hover:text-blueText cursor-pointer"
         >
           <EyeOutlined />
           <span className="ml-2 text-sm">Show</span>

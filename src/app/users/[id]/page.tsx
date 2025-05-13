@@ -47,8 +47,8 @@ export default function UserDetail() {
       key: "actions",
       render: (_: null, record: any) => (
         <Link
-          href={`/users/${record.id}`}
-          className="flex items-center px-[7px] border rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
+          href={`/albums/${record.id}`}
+          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueText rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
         >
           <EyeOutlined />
           <span className="ml-2 text-sm">Show</span>
@@ -67,10 +67,13 @@ export default function UserDetail() {
   return (
     <div className="">
       <div className="flex items-center gap-2 mb-1">
-        <div className="flex items-center gap-2 text-[#00000073] text-sm">
+        <Link
+          href={"/users"}
+          className="flex items-center gap-2 hover:bg-[#0000000f] px-2 py-1 rounded-md text-[#00000073] hover:text-textBlack text-sm"
+        >
           <IdcardOutlined />
           <span className="">Users</span>
-        </div>
+        </Link>
         <div>/</div>
         <span className="text-[#171717] text-sm">Show</span>
       </div>
@@ -85,8 +88,11 @@ export default function UserDetail() {
       <div className="bg-white p-6 border-[#d5d5d5e0] border-[1px] rounded-lg">
         <div className="p-6 border-[#d5d5d5e0] border-[1px] rounded-lg">
           {userLoading ? (
-            <div className="flex justify-center items-center bg-background h-10">
-              <div className="border-4 border-primary border-t-transparent rounded-full w-10 h-10 animate-spin" />
+            <div className="flex justify-center items-center space-x-2 bg-white dark:invert h-10">
+              <span className="sr-only">Loading...</span>
+              <div className="bg-black rounded-full w-4 h-4 animate-bounce [animation-delay:-0.3s]"></div>
+              <div className="bg-black rounded-full w-4 h-4 animate-bounce [animation-delay:-0.15s]"></div>
+              <div className="bg-black rounded-full w-4 h-4 animate-bounce"></div>
             </div>
           ) : (
             <div className="flex gap-6 pb-6 border-[#d5d5d5e0] border-b-[1px]">

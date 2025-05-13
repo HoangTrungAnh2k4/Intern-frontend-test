@@ -43,11 +43,7 @@ export default function Albums() {
         .join("&")}`
     : null;
 
-  const {
-    data: users,
-    error: usersError,
-    isLoading: usersLoading,
-  } = useSWR(usersQuery, fetcher);
+  const { data: users } = useSWR(usersQuery, fetcher);
 
   const columns = [
     {
@@ -99,7 +95,7 @@ export default function Albums() {
       render: (_: null, record: Album) => (
         <Link
           href={`/albums/${record.id}`}
-          className="flex items-center px-[7px] border rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
+          className="flex items-center px-[7px] border border-[#cacaca] hover:border-blueText rounded-sm w-fit text-textBlack hover:text-blueText cursor-pointer"
         >
           <EyeOutlined />
           <span className="ml-2 text-sm">Show</span>
@@ -108,7 +104,8 @@ export default function Albums() {
     },
   ];
 
-  const handleChange = (pagination: any, filters: any, sorter: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (pagination: any) => {
     setCurrentPage(pagination.current);
   };
 
